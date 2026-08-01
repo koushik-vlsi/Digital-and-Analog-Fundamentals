@@ -11,7 +11,17 @@ module demux(out,in,s);
       2'b01: out = {2'bzz,in,1'bz};
       2'b10: out = {1'bz,in,2'bzz};
       2'b11:  out ={in,3'bzzz};
-      default: out = 4'bzzzz;
+
+      2'b0x, 2'bx1, 2'bxz, 2'bxx, 2'bzx, 2'b1x, 2'bx0:
+        begin 
+          out = 4'bxxxx;
+        end
+      2'b0z, 2'b1z, 2'bzz, 2'bz0, 2'bz1:
+        begin
+          out = 4'bzzzz;
+        end
+      
+      default: $display("unspecified control");
       
     endcase
 endmodule
